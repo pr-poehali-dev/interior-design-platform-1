@@ -18,6 +18,15 @@ interface FurnitureItem {
   color: string;
   icon: string;
   isFixed?: boolean;
+  rotation?: number;
+}
+
+interface SavedProject {
+  id: string;
+  name: string;
+  roomId: string | null;
+  items: FurnitureItem[];
+  timestamp: number;
 }
 
 interface RoomTemplate {
@@ -102,6 +111,12 @@ export default function RoomEditor() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+  const [savedProjects, setSavedProjects] = useState<SavedProject[]>(() => {
+    const saved = localStorage.getItem('designspace-projects');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [projectName, setProjectName] = useState('');
+  const [showSaveInput, setShowSaveInput] = useState(false);
 
   const addItem = (template: typeof furnitureLibrary[0]) => {
     const newItem: FurnitureItem = {
@@ -114,6 +129,7 @@ export default function RoomEditor() {
       height: template.height,
       color: template.color,
       icon: template.icon,
+      rotation: 0,
     };
     setItems([...items, newItem]);
   };
@@ -182,6 +198,51 @@ export default function RoomEditor() {
     ));
   };
 
+  const rotateItem = () => {
+    if (selectedItem) {
+      setItems(items.map(item => 
+        item.id === selectedItem 
+          ? { 
+              ...item, 
+              rotation: ((item.rotation || 0) + 90) % 360,
+              width: item.height,
+              height: item.width
+            }
+          : item
+      ));
+    }
+  };
+
+  const saveProject = () => {
+    if (!projectName.trim()) return;
+    
+    const newProject: SavedProject = {
+      id: Date.now().toString(),
+      name: projectName,
+      roomId: selectedRoom,
+      items: items,
+      timestamp: Date.now(),
+    };
+    
+    const updatedProjects = [...savedProjects, newProject];
+    setSavedProjects(updatedProjects);
+    localStorage.setItem('designspace-projects', JSON.stringify(updatedProjects));
+    setProjectName('');
+    setShowSaveInput(false);
+  };
+
+  const loadProject = (project: SavedProject) => {
+    setItems(project.items);
+    setSelectedRoom(project.roomId);
+    setSelectedItem(null);
+  };
+
+  const deleteProject = (projectId: string) => {
+    const updatedProjects = savedProjects.filter(p => p.id !== projectId);
+    setSavedProjects(updatedProjects);
+    localStorage.setItem('designspace-projects', JSON.stringify(updatedProjects));
+  };
+
   const clearCanvas = () => {
     setItems([]);
     setSelectedItem(null);
@@ -201,9 +262,10 @@ export default function RoomEditor() {
         <div className="grid lg:grid-cols-[300px_1fr] gap-6">
           <Card className="p-6 h-fit">
             <Tabs defaultValue="rooms" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="rooms">Помещения</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 text-xs">
+                <TabsTrigger value="rooms">Комнаты</TabsTrigger>
                 <TabsTrigger value="furniture">Мебель</TabsTrigger>
+                <TabsTrigger value="projects">Проекты</TabsTrigger>
                 <TabsTrigger value="tools">Действия</TabsTrigger>
               </TabsList>
               
@@ -238,7 +300,78 @@ export default function RoomEditor() {
                 ))}
               </TabsContent>
 
+              <TabsContent value="projects" className="space-y-2 mt-4">
+                {!showSaveInput ? (
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => setShowSaveInput(true)}
+                    disabled={items.length === 0}
+                  >
+                    <Icon name="Save" size={20} className="mr-2" />
+                    Сохранить проект
+                  </Button>
+                ) : (
+                  <div className="space-y-2">
+                    <Input
+                      placeholder="Название проекта"
+                      value={projectName}
+                      onChange={(e) => setProjectName(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && saveProject()}
+                    />
+                    <div className="flex gap-2">
+                      <Button size="sm" onClick={saveProject} disabled={!projectName.trim()}>
+                        Сохранить
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => {
+                        setShowSaveInput(false);
+                        setProjectName('');
+                      }}>
+                        Отмена
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                
+                {savedProjects.length > 0 && (
+                  <div className="pt-4 border-t border-border">
+                    <div className="text-xs font-medium mb-2 text-muted-foreground">Сохранённые проекты</div>
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {savedProjects.map((project) => (
+                        <div key={project.id} className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 justify-start text-xs"
+                            onClick={() => loadProject(project)}
+                          >
+                            <Icon name="FolderOpen" size={16} className="mr-2" />
+                            {project.name}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteProject(project.id)}
+                          >
+                            <Icon name="Trash2" size={16} />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </TabsContent>
+
               <TabsContent value="tools" className="space-y-2 mt-4">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={rotateItem}
+                  disabled={!selectedItem || items.find(i => i.id === selectedItem)?.isFixed}
+                >
+                  <Icon name="RotateCw" size={20} className="mr-2" />
+                  Повернуть
+                </Button>
                 <Button
                   variant="outline"
                   className="w-full justify-start"
@@ -312,6 +445,21 @@ export default function RoomEditor() {
                         onValueChange={(value) => updateItemSize('height', value[0])}
                       />
                     </div>
+
+                    <div>
+                      <Label className="text-sm mb-2 block">Поворот: {item.rotation || 0}°</Label>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={rotateItem}
+                          className="flex-1"
+                        >
+                          <Icon name="RotateCw" size={16} className="mr-1" />
+                          90°
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 ) : item ? (
                   <div className="text-xs text-muted-foreground">
@@ -357,6 +505,8 @@ export default function RoomEditor() {
                     backgroundColor: item.color,
                     borderRadius: item.isFixed ? '4px' : '8px',
                     opacity: item.isFixed ? 0.95 : 1,
+                    transform: `rotate(${item.rotation || 0}deg)`,
+                    transformOrigin: 'center',
                   }}
                   onMouseDown={() => handleMouseDown(item.id, item.isFixed)}
                 >
