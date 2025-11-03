@@ -14,6 +14,15 @@ interface FurnitureItem {
   height: number;
   color: string;
   icon: string;
+  isFixed?: boolean;
+}
+
+interface RoomTemplate {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  elements: Omit<FurnitureItem, 'id'>[];
 }
 
 const furnitureLibrary = [
@@ -25,10 +34,71 @@ const furnitureLibrary = [
   { type: 'plant', name: 'Растение', width: 30, height: 30, color: '#22C55E', icon: 'Circle' },
 ];
 
+const roomTemplates: RoomTemplate[] = [
+  {
+    id: 'living-room',
+    name: 'Гостиная',
+    description: 'Прямоугольная комната с окном и дверью',
+    icon: 'Home',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 50, y: 50, width: 10, height: 500, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 690, y: 50, width: 10, height: 500, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 50, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 540, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 300, y: 50, width: 150, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 690, y: 250, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'bedroom',
+    name: 'Спальня',
+    description: 'Квадратная комната с окном',
+    icon: 'Bed',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 80, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 660, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 80, y: 80, width: 590, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 80, y: 510, width: 590, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 280, y: 80, width: 180, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 660, y: 280, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'kitchen',
+    name: 'Кухня',
+    description: 'Узкая комната с окном и дверью',
+    icon: 'ChefHat',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 100, y: 100, width: 10, height: 400, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 640, y: 100, width: 10, height: 400, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 100, y: 100, width: 550, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 100, y: 490, width: 550, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 250, y: 100, width: 140, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 100, y: 240, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'office',
+    name: 'Кабинет',
+    description: 'Комната с двумя окнами',
+    icon: 'Briefcase',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 70, y: 70, width: 10, height: 460, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 670, y: 70, width: 10, height: 460, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 70, y: 70, width: 610, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 70, y: 520, width: 610, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 150, y: 70, width: 120, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 480, y: 70, width: 120, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 70, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+];
+
 export default function RoomEditor() {
   const [items, setItems] = useState<FurnitureItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
   const addItem = (template: typeof furnitureLibrary[0]) => {
     const newItem: FurnitureItem = {
@@ -45,7 +115,18 @@ export default function RoomEditor() {
     setItems([...items, newItem]);
   };
 
-  const handleMouseDown = (id: string) => {
+  const loadRoomTemplate = (template: RoomTemplate) => {
+    const templateItems = template.elements.map((element, index) => ({
+      ...element,
+      id: `${element.type}-${Date.now()}-${index}`,
+    }));
+    setItems(templateItems);
+    setSelectedRoom(template.id);
+    setSelectedItem(null);
+  };
+
+  const handleMouseDown = (id: string, isFixed?: boolean) => {
+    if (isFixed) return;
     setSelectedItem(id);
     setDraggedItem(id);
   };
@@ -79,6 +160,7 @@ export default function RoomEditor() {
   const clearCanvas = () => {
     setItems([]);
     setSelectedItem(null);
+    setSelectedRoom(null);
   };
 
   return (
@@ -93,11 +175,29 @@ export default function RoomEditor() {
 
         <div className="grid lg:grid-cols-[300px_1fr] gap-6">
           <Card className="p-6 h-fit">
-            <Tabs defaultValue="furniture" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
+            <Tabs defaultValue="rooms" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="rooms">Помещения</TabsTrigger>
                 <TabsTrigger value="furniture">Мебель</TabsTrigger>
-                <TabsTrigger value="tools">Инструменты</TabsTrigger>
+                <TabsTrigger value="tools">Действия</TabsTrigger>
               </TabsList>
+              
+              <TabsContent value="rooms" className="space-y-2 mt-4">
+                {roomTemplates.map((template) => (
+                  <Button
+                    key={template.id}
+                    variant={selectedRoom === template.id ? "default" : "outline"}
+                    className="w-full justify-start"
+                    onClick={() => loadRoomTemplate(template)}
+                  >
+                    <Icon name={template.icon as any} size={20} className="mr-2" />
+                    <div className="text-left">
+                      <div className="font-medium">{template.name}</div>
+                      <div className="text-xs opacity-70">{template.description}</div>
+                    </div>
+                  </Button>
+                ))}
+              </TabsContent>
               
               <TabsContent value="furniture" className="space-y-2 mt-4">
                 {furnitureLibrary.map((item) => (
@@ -165,7 +265,11 @@ export default function RoomEditor() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className={`absolute cursor-move transition-shadow hover:shadow-lg ${
+                  className={`absolute transition-shadow ${
+                    item.isFixed 
+                      ? 'cursor-default' 
+                      : 'cursor-move hover:shadow-lg'
+                  } ${
                     selectedItem === item.id ? 'ring-2 ring-primary' : ''
                   }`}
                   style={{
@@ -174,9 +278,10 @@ export default function RoomEditor() {
                     width: `${item.width}px`,
                     height: `${item.height}px`,
                     backgroundColor: item.color,
-                    borderRadius: '8px',
+                    borderRadius: item.isFixed ? '4px' : '8px',
+                    opacity: item.isFixed ? 0.95 : 1,
                   }}
-                  onMouseDown={() => handleMouseDown(item.id)}
+                  onMouseDown={() => handleMouseDown(item.id, item.isFixed)}
                 >
                   <div className="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
                     {item.name}
