@@ -3,6 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 
 interface FurnitureItem {
   id: string;
@@ -157,6 +160,28 @@ export default function RoomEditor() {
     }
   };
 
+  const updateItemColor = (color: string) => {
+    if (selectedItem) {
+      setItems(items.map(item => 
+        item.id === selectedItem ? { ...item, color } : item
+      ));
+    }
+  };
+
+  const updateItemSize = (dimension: 'width' | 'height', value: number) => {
+    if (selectedItem) {
+      setItems(items.map(item => 
+        item.id === selectedItem ? { ...item, [dimension]: value } : item
+      ));
+    }
+  };
+
+  const changeWallsColor = (color: string) => {
+    setItems(items.map(item => 
+      item.type.includes('wall') ? { ...item, color } : item
+    ));
+  };
+
   const clearCanvas = () => {
     setItems([]);
     setSelectedItem(null);
@@ -235,14 +260,66 @@ export default function RoomEditor() {
               </TabsContent>
             </Tabs>
 
-            {selectedItem && (
-              <div className="mt-6 pt-6 border-t border-border">
-                <div className="text-sm font-medium mb-2">Выбрано:</div>
-                <div className="text-sm text-muted-foreground">
-                  {items.find(i => i.id === selectedItem)?.name}
+            <div className="mt-6 pt-6 border-t border-border space-y-4">
+              <div>
+                <Label className="text-sm font-medium mb-2 block">Цвет стен</Label>
+                <div className="grid grid-cols-4 gap-2">
+                  {['#94A3B8', '#E2E8F0', '#FDE1D3', '#D3E4FD', '#E5DEFF', '#FFDEE2'].map((color) => (
+                    <button
+                      key={color}
+                      className="w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition-colors"
+                      style={{ backgroundColor: color }}
+                      onClick={() => changeWallsColor(color)}
+                    />
+                  ))}
                 </div>
               </div>
-            )}
+
+              {selectedItem && (() => {
+                const item = items.find(i => i.id === selectedItem);
+                return item && !item.isFixed ? (
+                  <div className="space-y-4">
+                    <div className="text-sm font-semibold">Выбран: {item.name}</div>
+                    
+                    <div>
+                      <Label className="text-sm mb-2 block">Цвет</Label>
+                      <Input
+                        type="color"
+                        value={item.color}
+                        onChange={(e) => updateItemColor(e.target.value)}
+                        className="h-10 cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <Label className="text-sm mb-2 block">Ширина: {item.width}px</Label>
+                      <Slider
+                        value={[item.width]}
+                        min={20}
+                        max={200}
+                        step={10}
+                        onValueChange={(value) => updateItemSize('width', value[0])}
+                      />
+                    </div>
+
+                    <div>
+                      <Label className="text-sm mb-2 block">Высота: {item.height}px</Label>
+                      <Slider
+                        value={[item.height]}
+                        min={20}
+                        max={200}
+                        step={10}
+                        onValueChange={(value) => updateItemSize('height', value[0])}
+                      />
+                    </div>
+                  </div>
+                ) : item ? (
+                  <div className="text-xs text-muted-foreground">
+                    Элементы помещения (стены, окна, двери) нельзя редактировать
+                  </div>
+                ) : null;
+              })()}
+            </div>
           </Card>
 
           <Card className="p-0 overflow-hidden">
