@@ -1,11 +1,75 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { RoomTemplate, SavedProject, FurnitureItem } from './types';
-import { roomTemplates, furnitureLibrary } from './constants';
+import { roomTemplates, furnitureLibrary, furnitureCategories } from './constants';
 import PropertyPanel from './PropertyPanel';
+
+function FurnitureLibraryView({ onAddItem }: { onAddItem: (template: typeof furnitureLibrary[0]) => void }) {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredItems = furnitureLibrary.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  return (
+    <div className="space-y-2">
+      <Input
+        placeholder="Поиск мебели..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="mb-2"
+      />
+      
+      <div className="flex flex-wrap gap-1 mb-2">
+        <Button
+          size="sm"
+          variant={selectedCategory === 'all' ? 'default' : 'outline'}
+          onClick={() => setSelectedCategory('all')}
+          className="text-xs h-7"
+        >
+          Все
+        </Button>
+        {furnitureCategories.map((cat) => (
+          <Button
+            key={cat.id}
+            size="sm"
+            variant={selectedCategory === cat.id ? 'default' : 'outline'}
+            onClick={() => setSelectedCategory(cat.id)}
+            className="text-xs h-7"
+          >
+            {cat.name}
+          </Button>
+        ))}
+      </div>
+
+      <div className="space-y-1 max-h-[400px] overflow-y-auto pr-1">
+        {filteredItems.map((item) => (
+          <Button
+            key={item.type}
+            variant="outline"
+            className="w-full justify-start text-xs h-8"
+            onClick={() => onAddItem(item)}
+          >
+            <Icon name={item.icon as any} size={16} className="mr-2" />
+            <span className="truncate">{item.name}</span>
+          </Button>
+        ))}
+        {filteredItems.length === 0 && (
+          <div className="text-center text-sm text-muted-foreground py-4">
+            Ничего не найдено
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 interface EditorSidebarProps {
   selectedRoom: string | null;
@@ -77,18 +141,8 @@ export default function EditorSidebar({
           ))}
         </TabsContent>
         
-        <TabsContent value="furniture" className="space-y-2 mt-4">
-          {furnitureLibrary.map((item) => (
-            <Button
-              key={item.type}
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => onAddItem(item)}
-            >
-              <Icon name={item.icon as any} size={20} className="mr-2" />
-              {item.name}
-            </Button>
-          ))}
+        <TabsContent value="furniture" className="mt-4">
+          <FurnitureLibraryView onAddItem={onAddItem} />
         </TabsContent>
 
         <TabsContent value="projects" className="space-y-2 mt-4">
