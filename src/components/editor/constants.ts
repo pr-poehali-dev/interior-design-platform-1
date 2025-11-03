@@ -264,4 +264,144 @@ export const roomTemplates: RoomTemplate[] = [
       { type: 'door', name: 'Дверь', x: 70, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
     ]
   },
+  {
+    id: 'bathroom',
+    name: 'Ванная',
+    description: 'Маленькая комната с дверью',
+    icon: 'Bath',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 150, y: 120, width: 10, height: 360, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 590, y: 120, width: 10, height: 360, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 150, y: 120, width: 450, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 150, y: 470, width: 450, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 150, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'dining-room',
+    name: 'Столовая',
+    description: 'Большая комната с двумя дверями',
+    icon: 'UtensilsCrossed',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 50, y: 50, width: 10, height: 500, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 690, y: 50, width: 10, height: 500, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 50, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 540, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 270, y: 50, width: 200, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 50, y: 200, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 690, y: 320, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'kids-room',
+    name: 'Детская',
+    description: 'Яркая комната с окном',
+    icon: 'Baby',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 80, y: 100, width: 10, height: 400, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 660, y: 100, width: 10, height: 400, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 80, y: 100, width: 590, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 80, y: 490, width: 590, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 270, y: 100, width: 200, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 80, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'walk-in-closet',
+    name: 'Гардеробная',
+    description: 'Узкая комната для одежды',
+    icon: 'Shirt',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 200, y: 150, width: 10, height: 300, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 540, y: 150, width: 10, height: 300, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 200, y: 150, width: 350, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 200, y: 440, width: 350, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 200, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'laundry-room',
+    name: 'Прачечная',
+    description: 'Маленькая комната с дверью',
+    icon: 'WashingMachine',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 180, y: 140, width: 10, height: 320, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 560, y: 140, width: 10, height: 320, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 180, y: 140, width: 390, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 180, y: 450, width: 390, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 560, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'home-gym',
+    name: 'Домашний спортзал',
+    description: 'Комната с большим окном',
+    icon: 'Dumbbell',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 60, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 680, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 60, y: 80, width: 630, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 60, y: 510, width: 630, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 220, y: 80, width: 300, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 60, y: 270, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'library',
+    name: 'Библиотека',
+    description: 'Комната с тремя окнами',
+    icon: 'BookOpen',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 50, y: 60, width: 10, height: 480, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 690, y: 60, width: 10, height: 480, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 60, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 50, y: 530, width: 650, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 120, y: 60, width: 120, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 310, y: 60, width: 120, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 500, y: 60, width: 120, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 50, y: 260, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'hallway',
+    name: 'Прихожая',
+    description: 'Длинный коридор',
+    icon: 'DoorOpen',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 250, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 490, y: 80, width: 10, height: 440, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 250, y: 80, width: 250, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 250, y: 510, width: 250, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 250, y: 200, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 490, y: 340, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'studio',
+    name: 'Студия',
+    description: 'Большое открытое пространство',
+    icon: 'Sparkles',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 40, y: 40, width: 10, height: 520, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 700, y: 40, width: 10, height: 520, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 40, y: 40, width: 670, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 40, y: 550, width: 670, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 150, y: 40, width: 180, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'window', name: 'Окно', x: 410, y: 40, width: 180, height: 10, color: '#60A5FA', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 700, y: 280, width: 10, height: 80, color: '#92400E', icon: 'RectangleVertical', isFixed: true },
+    ]
+  },
+  {
+    id: 'balcony',
+    name: 'Балкон',
+    description: 'Узкий балкон с перилами',
+    icon: 'Fence',
+    elements: [
+      { type: 'wall-v', name: 'Стена', x: 220, y: 200, width: 10, height: 200, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-v', name: 'Стена', x: 520, y: 200, width: 10, height: 200, color: '#94A3B8', icon: 'RectangleVertical', isFixed: true },
+      { type: 'wall-h', name: 'Перила', x: 220, y: 200, width: 310, height: 5, color: '#64748B', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'wall-h', name: 'Стена', x: 220, y: 395, width: 310, height: 10, color: '#94A3B8', icon: 'RectangleHorizontal', isFixed: true },
+      { type: 'door', name: 'Дверь', x: 335, y: 395, width: 80, height: 10, color: '#92400E', icon: 'RectangleHorizontal', isFixed: true },
+    ]
+  },
 ];

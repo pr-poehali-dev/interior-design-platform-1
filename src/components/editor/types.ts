@@ -12,12 +12,23 @@ export interface FurnitureItem {
   rotation?: number;
 }
 
+export interface Room {
+  id: string;
+  name: string;
+  templateId: string;
+  items: FurnitureItem[];
+  position?: { x: number; y: number };
+  bounds?: { width: number; height: number };
+}
+
 export interface SavedProject {
   id: string;
   name: string;
   roomId: string | null;
   items: FurnitureItem[];
   timestamp: number;
+  isMultiRoom?: boolean;
+  rooms?: Room[];
 }
 
 export interface RoomTemplate {
